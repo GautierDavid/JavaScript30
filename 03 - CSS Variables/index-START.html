@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -21,6 +21,24 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    /* declaring variable css in the root element (the base of the document) */
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    /* add the variable to the image */
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    /* add the variable to the hl */
+    .hl {
+      background-color: var(--base); 
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,6 +63,22 @@
   </style>
 
   <script>
+    // get all inputs element
+    const inputs = document.querySelectorAll('.controls input');
+    
+    // function to change css value
+    function handleUpdate() {
+      // suffix equal data-sizing or "" if element doesn't have the attribute data-sizing
+      const suffix = this.dataset.sizing || "";
+      // change the property in the root element using the name of the input which are the same that the name of the variables
+      // add the new value and the right suffix
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+
+    // add eventlistener on input to detect when value change and then call handleUpdate
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    // add eventListener on input to detect when mouse move on them then call handleUpdate ==> to make the change when you move in live and not only when you click up
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
 
 </body>
